@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SeekerRegistrationRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -14,7 +14,7 @@ class UserController extends Controller
         return view('user.seeker-register');
     }
 
-    public function storeSeeker(Request $request)
+    public function storeSeeker(SeekerRegistrationRequest $request)
     {
         User::create([
             'name' => $request->get('name'),
