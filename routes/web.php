@@ -19,4 +19,5 @@ Route::get('/', function () {
 });
 
 
-Route::get('/register/seeker',[UserController::class ,'createSeeker']);
+Route::get('/register/seeker',[UserController::class ,'createSeeker'])->name('create.seeker');
+Route::post('/register/seeker',[UserController::class ,'storeSeeker'])->name('store.seeker');
