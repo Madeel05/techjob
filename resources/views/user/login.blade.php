@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-header">Login</div>
-                    <form action="" method="post" autocomplete="off">
+                    <form action="{{route('login.post')}}" method="post" autocomplete="off">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">

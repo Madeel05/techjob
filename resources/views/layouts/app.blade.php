@@ -19,10 +19,10 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="{{route('login')}}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Job Seeker</a>
+                    <a class="nav-link" href="{{route('create.seeker')}}">Job Seeker</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" >Employer</a>
