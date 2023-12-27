@@ -4,6 +4,7 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @include('message')
                 <div class="card shadow-lg">
                     <div class="card-header">Login</div>
                     <form action="{{route('login.post')}}" method="post" autocomplete="off">

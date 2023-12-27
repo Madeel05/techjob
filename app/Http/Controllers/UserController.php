@@ -26,7 +26,8 @@ class UserController extends Controller
             'user_type' => self::JOB_SEEKER,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
+
     }
 
     public function createEmployer()
@@ -41,9 +42,10 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
             'user_type' => self::JOB_EMPLOYER,
+            'user_trial' => now()->addWeek()
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
     }
 
     public function login()
