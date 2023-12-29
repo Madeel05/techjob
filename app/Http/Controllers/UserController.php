@@ -19,12 +19,13 @@ class UserController extends Controller
 
     public function storeSeeker(RegistrationFormRequest $request)
     {
-        User::create([
+        $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
             'user_type' => self::JOB_SEEKER,
         ]);
+        $user->sendEmailVerificationNotification();
 
         return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
 
@@ -37,13 +38,15 @@ class UserController extends Controller
 
     public function storeEmployer(RegistrationFormRequest $request)
     {
-        User::create([
+       $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
             'user_type' => self::JOB_EMPLOYER,
             'user_trial' => now()->addWeek()
         ]);
+       
+        $user->sendEmailVerificationNotification();
 
         return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
     }
@@ -61,14 +64,15 @@ class UserController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard');
         }
 
         return 'Wrong email or password';
     }
 
-    public function logout(){
+    public function logout()
+    {
         auth()->logout();
 
         return redirect()->route('login');
