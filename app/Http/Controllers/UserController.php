@@ -25,9 +25,12 @@ class UserController extends Controller
             'password' => bcrypt($request->get('password')),
             'user_type' => self::JOB_SEEKER,
         ]);
+
+        Auth::login($user);
+
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
+        return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
 
     }
 
@@ -45,10 +48,12 @@ class UserController extends Controller
             'user_type' => self::JOB_EMPLOYER,
             'user_trial' => now()->addWeek()
         ]);
-       
+
+       Auth::login($user);
+
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('login')->with('successMessage', 'Your Account Created Successfully');
+        return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
     }
 
     public function login()
