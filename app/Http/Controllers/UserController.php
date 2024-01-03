@@ -30,7 +30,9 @@ class UserController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
+        return response()->json('success');
+
+       // return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
 
     }
 
@@ -53,7 +55,7 @@ class UserController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
+        // return redirect()->route('verification.notice')->with('successMessage', 'Your Account Created Successfully');
     }
 
     public function login()
