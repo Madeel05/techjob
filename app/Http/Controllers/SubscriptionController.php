@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PurchaseMail;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
@@ -106,6 +109,12 @@ class SubscriptionController extends Controller
             'billing_end' => $billing_ends,
             'status' => 'paid',
         ]);
+
+        try {
+            Mail::to(auth()->user())->queue(new PurchaseMail($plan,$billing_ends));
+        }catch (\Exception $e){
+            return response()->json($e);
+        }
 
         return redirect()->route('dashboard')->with('success','Payment Successfully proceed');
     }
