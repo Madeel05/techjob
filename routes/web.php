@@ -5,7 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Middleware\isEmployer;
+use App\Http\Controllers\PostJobController;
+use App\Http\Middleware\isPremiumUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,11 +46,12 @@ Route::get('/verify',[DashboardController::class ,'verify'])->name('verification
 
 Route::get('resend/verification/email',[DashboardController::class, 'resend'])->name('resend.email');
 
-Route::get('subscribe', [SubscriptionController::class, 'subscribe']);
+Route::get('subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::get('pay/weekly', [SubscriptionController::class, 'initiatePayment'])->name('pay.weekly');
 Route::get('pay/monthly', [SubscriptionController::class, 'initiatePayment'])->name('pay.monthly');
 Route::get('pay/yearly', [SubscriptionController::class, 'initiatePayment'])->name('pay.yearly');
 Route::get('payment/success', [SubscriptionController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('payment/cancel', [SubscriptionController::class, 'cancel'])->name('payment.cancel');
+Route::get('job/create', [PostJobController::class, 'create'])->name('job.create')->middleware(isPremiumUser::class);
 
 

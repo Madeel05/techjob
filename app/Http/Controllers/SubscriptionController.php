@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\isEmployer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
+use App\Http\Middleware\isEmployer;
+use App\Http\Middleware\donotAllowUserToMakePayment;
 
 class SubscriptionController extends Controller
 {
@@ -17,7 +19,7 @@ class SubscriptionController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', isEmployer::class]);
+        $this->middleware(['auth', isEmployer::class, donotAllowUserToMakePayment::class]);
     }
 
     public function subscribe()
@@ -45,7 +47,7 @@ class SubscriptionController extends Controller
                 'quantity' => 1,
             ],
             'yearly' => [
-                'id' => 'price_1OWzq2SJCVKu9fZqsuY8Bzfc',
+                'id' => 'price_1OWzukSJCVKu9fZqEiTCMtcs',
                 'name' => 'yearly',
                 'description' => 'yearly payments',
                 'price' => self::YEARLY_AMOUNT,
@@ -65,7 +67,7 @@ class SubscriptionController extends Controller
                 $selectPlan = $plans['monthly'];
                 $billingEnds = now()->addMonth()->startOfDay()->toDateString();
             } elseif ($request->is('pay/yearly')) {
-                $selectPlan = $plans['monthly'];
+                $selectPlan = $plans['yearly'];
                 $billingEnds = now()->addYear()->startOfDay()->toDateString();
             }
 
@@ -91,17 +93,25 @@ class SubscriptionController extends Controller
                 return redirect($session->url);
             }
         } catch (\Exception $exception) {
-            return $exception;
+            return response()->json($exception);
         }
     }
 
     public function paymentSuccess(Request $request)
     {
-        //update db
+       $plan = $request->plan;
+       $billing_ends = $request->billing_ends;
+        User::where('id', auth()->user()->id)->update([
+            'plan' => $plan,
+            'billing_end' => $billing_ends,
+            'status' => 'paid',
+        ]);
+
+        return redirect()->route('dashboard')->with('success','Payment Successfully proceed');
     }
 
     public function cancel()
     {
-        //rediect
+        return redirect()->route('dashboard')->with('error','Payment Unsuccessfully');
     }
 }
