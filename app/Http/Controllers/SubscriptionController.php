@@ -22,8 +22,7 @@ class SubscriptionController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', isEmployer::class]);
-        $this->middleware([ donotAllowUserToMakePayment::class])->except('subscribe');
+        $this->middleware(['auth', isEmployer::class, donotAllowUserToMakePayment::class]);
     }
 
     public function subscribe()
