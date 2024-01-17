@@ -1,19 +1,7 @@
 @extends('layouts.admin.main')
 
 @section('content')
-
-    <div class="container mt-5 text-center">
-        Hello, {{auth()->user()->name}}
-        @if(!auth()->user()->billing_end)
-            @if(auth()->check() && Auth::user()->user_type === 'employer')
-                <p>Your trial {{now()->format('Y-m-d') > auth()->user()->user_trial ? 'was expire' : 'will expire'}}
-                    on {{Auth::user()->user_trial}}</p>
-            @endif
-        @endif
-        @if(auth()->check() && Auth::user()->user_type === 'employer')
-            <p>Your membership {{now()->format('Y-m-d') > auth()->user()->billing_end ? 'was expire' : 'will expire'}}
-                on {{Auth::user()->user_trial}}</p>
-        @endif
+    <div class="container mt-5">
         <div class="row justify-content-center">
 
             @if(session()->has('success'))
