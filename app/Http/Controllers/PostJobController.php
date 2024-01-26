@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class PostJobController extends Controller
 {
-    public function create(){
-        dd('create a job');
+    public function create()
+    {
+        return view('job.create');
     }
 }

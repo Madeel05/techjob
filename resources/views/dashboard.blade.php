@@ -29,7 +29,7 @@
                 @endif
                 @if(auth()->check() && Auth::user()->user_type === 'employer')
                     <p>Your membership {{now()->format('Y-m-d') > auth()->user()->billing_end ? 'was expire' : 'will expire'}}
-                        on {{Auth::user()->user_trial}}</p>
+                        on {{Auth::user()->billing_end}}</p>
                 @endif
             </ol>
             <div class="row">
