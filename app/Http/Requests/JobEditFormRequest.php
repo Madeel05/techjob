@@ -23,7 +23,7 @@ class JobEditFormRequest extends FormRequest
     {
         return [
             'title' => 'required|min:10',
-            'feature_image' => 'required|mimes:png,jpeg,jpg|max:2048',
+            'feature_image' => 'mimes:png,jpeg,jpg|max:2048',
             'description' => 'required',
             'roles' => 'required',
             'job_type' => 'required',
@@ -31,4 +31,5 @@ class JobEditFormRequest extends FormRequest
             'application_close_date' => 'required',
         ];
     }
+
 }

@@ -9,7 +9,7 @@
                 @if(Session::has('success'))
                     <div class="alert alert-success">{{Session::get('success')}}</div>
                 @endif
-                <form action="#" method="POST" enctype="multipart/form-data">@csrf
+                <form action="{{route('job.update',[$listing->id])}}" method="POST" enctype="multipart/form-data">@csrf
                     @method('PUT')
                     <div class="form-group">
                         <label for="title">Feature Image</label>
@@ -27,14 +27,16 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control summernote">{{$listing->description}}</textarea>
+                        <textarea id="description" name="description"
+                                  class="form-control summernote">{{$listing->description}}</textarea>
                         @if($errors->has('description'))
                             <div class="error"> {{$errors->first('description')}}  </div>
                         @endif
                     </div>
                     <div class="form-group">
                         <label for="description">Roles and Responsibility</label>
-                        <textarea id="description" name="roles" class="form-control summernote">{{$listing->roles}}</textarea>
+                        <textarea id="description" name="roles"
+                                  class="form-control summernote">{{$listing->roles}}</textarea>
                         @if($errors->has('roles'))
                             <div class="error"> {{$errors->first('roles')}}  </div>
                         @endif
@@ -67,7 +69,8 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" name="address" id="address" class="form-control" value="{{$listing->address}}">
+                        <input type="text" name="address" id="address" class="form-control"
+                               value="{{$listing->address}}">
                         @if($errors->has('address'))
                             <div class="error"> {{$errors->first('address')}}  </div>
                         @endif
@@ -81,7 +84,8 @@
                     </div>
                     <div class="form-group">
                         <label for="date">Application closing date</label>
-                        <input type="text" name="application_close_date" id="datepicker" class="form-control" value="{{$listing->application_close_date}}">
+                        <input type="text" name="application_close_date" id="datepicker" class="form-control"
+                               value="{{$listing->application_close_date}}">
                         @if($errors->has('date'))
                             <div class="error"> {{$errors->first('application_close_date')}}  </div>
                         @endif
@@ -96,11 +100,12 @@
     </div>
     <style>
         .note-insert {
-            display: none!important;
+            display: none !important;
         }
+
         .error {
             color: red;
             font-weight: bold;
         }
     </style>
-    @endsection
+@endsection
