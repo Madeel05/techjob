@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PostJobController;
+use App\Http\Controllers\ApplicantController;
 use App\Http\Middleware\isPremiumUser;
 use App\Http\Middleware\checkAuth;
 
@@ -65,6 +66,10 @@ Route::get('job/{listing}/edit', [PostJobController::class, 'edit'])->name('job.
 Route::put('job/{id}/edit', [PostJobController::class, 'update'])->name('job.update');
 Route::get('job', [PostJobController::class, 'index'])->name('job.index');
 Route::delete('job/{id}/delete', [PostJobController::class, 'destroy'])->name('job.delete');
+
+Route::get('applicants', [ApplicantController::class, 'index'])->name('applicants.index');
+Route::get('applicants/{listing:slug}', [ApplicantController::class, 'show'])->name('applicants.show');
+Route::post('shortlist/{listingId}/{userId}', [ApplicantController::class, 'shortlist'])->name('applicants.shortlist');
 
 
 
