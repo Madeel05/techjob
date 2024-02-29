@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PostJobController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\JobListingController;
 use App\Http\Middleware\isPremiumUser;
 use App\Http\Middleware\checkAuth;
 
@@ -21,9 +22,8 @@ use App\Http\Middleware\checkAuth;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [JobListingController::class, 'index']);
+Route::get('/jobs/{listing:slug}', [JobListingController::class, 'show'])->name('jobs.show');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
