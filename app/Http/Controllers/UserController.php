@@ -141,4 +141,10 @@ class UserController extends Controller
             return back()->with('success', 'Your Resume Has Been Updated Successfully');
         }
     }
+
+    public function jobApplied()
+    {
+        $user = User::with('listing')->where('id', auth()->user()->id)->first();
+        return view('seeker.job-applied', compact('user'));
+    }
 }

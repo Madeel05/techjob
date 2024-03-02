@@ -33,4 +33,11 @@ class ApplicantController extends Controller
         }
         return back();
     }
+
+    public function apply($listingId)
+    {
+        $user = auth()->user();
+        $user->listing()->syncWithoutDetaching($listingId);
+        return back()->with('success', 'Your Application Submit Successfully');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PostJobController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\JobListingController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Middleware\isPremiumUser;
 use App\Http\Middleware\checkAuth;
 
@@ -22,8 +23,10 @@ use App\Http\Middleware\checkAuth;
 |
 */
 
-Route::get('/', [JobListingController::class, 'index']);
+Route::get('/', [JobListingController::class, 'index'])->name('listing.index');
+Route::get('/company/{id}', [JobListingController::class, 'company'])->name('company');
 Route::get('/jobs/{listing:slug}', [JobListingController::class, 'show'])->name('jobs.show');
+Route::post('/resume/upload', [FileUploadController::class, 'store'])->name('file.store');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -47,6 +50,7 @@ Route::post('user/profile', [UserController::class, 'update'])->name('user.updat
 Route::get('user/profile/seeker', [UserController::class, 'seekerProfile'])->name('seeker.profile')->middleware('auth');
 Route::post('user/password', [UserController::class, 'changePassword'])->name('user.password')->middleware('auth');
 Route::post('upload/resume', [UserController::class, 'uploadResume'])->name('upload.resume')->middleware('auth');
+Route::get('user/job/applied', [UserController::class, 'jobApplied'])->name('job.applied')->middleware(['auth', 'verified']);
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified', isPremiumUser::class]);
@@ -70,6 +74,7 @@ Route::delete('job/{id}/delete', [PostJobController::class, 'destroy'])->name('j
 Route::get('applicants', [ApplicantController::class, 'index'])->name('applicants.index');
 Route::get('applicants/{listing:slug}', [ApplicantController::class, 'show'])->name('applicants.show');
 Route::post('shortlist/{listingId}/{userId}', [ApplicantController::class, 'shortlist'])->name('applicants.shortlist');
+Route::post('/application/{listingId}/submit', [ApplicantController::class, 'apply'])->name('application.apply');
 
 
 
