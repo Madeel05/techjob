@@ -23,52 +23,58 @@
                 Hello, {{auth()->user()->name}} &nbsp;
                 @if(!auth()->user()->billing_end)
                     @if(auth()->check() && Auth::user()->user_type === 'employer')
-                        <p> &nbsp;Your trial {{now()->format('Y-m-d') > auth()->user()->user_trial ? 'was expire' : 'will expire'}}
+                        <p> &nbsp;Your
+                            trial {{now()->format('Y-m-d') > auth()->user()->user_trial ? 'was expire' : 'will expire'}}
                             on {{Auth::user()->user_trial}}</p>
                     @endif
                 @endif
                 @if(auth()->check() && Auth::user()->user_type === 'employer')
-                    <p>Your membership {{now()->format('Y-m-d') > auth()->user()->billing_end ? 'was expire' : 'will expire'}}
+                    <p>Your
+                        membership {{now()->format('Y-m-d') > auth()->user()->billing_end ? 'was expire' : 'will expire'}}
                         on {{Auth::user()->billing_end}}</p>
                 @endif
             </ol>
             <div class="row">
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-6">
                     <div class="card bg-primary text-white mb-4">
-                        <div class="card-body">Primary Card</div>
+                        <div class="card-body">Total Jobs
+                            ({{\App\Models\Listing::where('user_id', auth()->user()->id)->count()}})
+                        </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <a class="small text-white stretched-link" href="/job">View</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-6">
                     <div class="card bg-warning text-white mb-4">
-                        <div class="card-body">Warning Card</div>
+                        <div class="card-body">Profile</div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <a class="small text-white stretched-link" href="/user/profile">View</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-4 col-md-6">
                     <div class="card bg-success text-white mb-4">
-                        <div class="card-body">Success Card</div>
+                        <div class="card-body">Plan
+                            ({{\App\Models\User::where('id', auth()->user()->id)->first()->plan}})
+                        </div>
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#">View Details</a>
+                            <a class="small text-white stretched-link" href="#">View</a>
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-danger text-white mb-4">
-                        <div class="card-body">Danger Card</div>
-                        <div class="card-footer d-flex align-items-center justify-content-between">
-                            <a class="small text-white stretched-link" href="#">View Details</a>
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                        </div>
-                    </div>
-                </div>
+                {{--                <div class="col-xl-3 col-md-6">--}}
+                {{--                    <div class="card bg-danger text-white mb-4">--}}
+                {{--                        <div class="card-body">Danger Card</div>--}}
+                {{--                        <div class="card-footer d-flex align-items-center justify-content-between">--}}
+                {{--                            <a class="small text-white stretched-link" href="#">View Details</a>--}}
+                {{--                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
             </div>
             <div class="row">
                 <div class="col-xl-6">
@@ -77,7 +83,9 @@
                             <i class="fas fa-chart-area me-1"></i>
                             Area Chart Example
                         </div>
-                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body">
+                            <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -86,7 +94,9 @@
                             <i class="fas fa-chart-bar me-1"></i>
                             Bar Chart Example
                         </div>
-                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body">
+                            <canvas id="myBarChart" width="100%" height="40"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

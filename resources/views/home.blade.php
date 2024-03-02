@@ -3,13 +3,48 @@
     <div class="container mt-5">
         <div class="d-flex justify-content-between">
             <h4>Recommended Jobs</h4>
-            <button class="btn btn-dark">View</button>
+            <div class=" dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Salary
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{route('listing.index',['sort'=> 'salary_high_to_low'])}}">High
+                            to low</a></li>
+                    <li><a class="dropdown-item" href="{{route('listing.index',['sort'=> 'salary_low_to_high'])}}">Low
+                            to high</a></li>
+                </ul>
+
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Date
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{route('listing.index',['date'=> 'latest'])}}">Latest</a></li>
+                    <li><a class="dropdown-item" href="{{route('listing.index',['date'=> 'oldest'])}}">Oldest</a></li>
+                </ul>
+
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Job type
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item"
+                           href="{{route('listing.index',['job_type'=> 'Fulltime'])}}">Fulltime</a></li>
+                    <li><a class="dropdown-item"
+                           href="{{route('listing.index',['job_type'=> 'Parttime'])}}">Parttime</a></li>
+                    <li><a class="dropdown-item" href="{{route('listing.index',['job_type'=> 'Casual'])}}">Casual</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                           href="{{route('listing.index',['job_type'=> 'Contract'])}}">Contract</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="row mt-2 g-1">
             @foreach($jobs as $job)
                 <div class="col-md-3">
-                    <div class="card p-2">
+                    <div class="card p-2 {{$job->job_type}}">
                         <div class="text-right"><small class="badge text-bg-info">{{$job->job_type}}</small></div>
                         <div class="text-center mt-2 p-3"><img class="rounded-circle"
                                                                src="{{Storage::url($job->profile->profile_pic)}}"
