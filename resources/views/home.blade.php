@@ -44,24 +44,17 @@
         <div class="row mt-2 g-1">
             @foreach($jobs as $job)
                 <div class="col-md-3">
-                    <div class="card p-2 {{$job->job_type}}">
-                        <div class="text-right"><small class="badge text-bg-info">{{$job->job_type}}</small></div>
-                        <div class="text-center mt-2 p-3"><img class="rounded-circle"
-                                                               src="{{Storage::url($job->profile->profile_pic)}}"
-                                                               width="100"/> <br>
-                            <span class="d-bl>ock font-weight-bold">{{$job->title}}</span>
-                            <hr>
-                            <span>{{$job->profile->name}}</span>
-                            <div class="d-flex flex-row align-items-center justify-content-center">
-                                <small class="ml-1">{{$job->address}}</small>
-                            </div>
-                            <div class="d-flex justify-content-between mt-3"><span>${{$job->salary}}</span>
-                                <a href="{{route('jobs.show',[$job->slug])}}">
-                                    <button class="btn btn-dark">Apply Now</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <x-card :job_type="$job->job_type" :slug="$job->slug" :salary="$job->salary">
+                        <x-slot name="image">
+                            <img class="rounded-circle" src="{{Storage::url($job->profile->profile_pic)}}" width="100"/>
+                        </x-slot>
+                        <x-slot name="address" class="d-flex flex-row align-items-center justify-content-center">
+                            <small class="ml-1">{{$job->address}}</small>
+                        </x-slot>
+                        <span class="d-bl>ock font-weight-bold">{{$job->title}}</span>
+                        <hr>
+                        <span>{{$job->profile->name}}</span>
+                    </x-card>
                 </div>
             @endforeach
         </div>
